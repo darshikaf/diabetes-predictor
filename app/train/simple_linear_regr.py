@@ -1,13 +1,14 @@
 import numpy as np
-from app.train.simple_linear_regr_utils import generate_data, evaluate, save_model
+
+from app.train.simple_linear_regr_utils import evaluate, generate_data
 
 
 class SimpleLinearRegression:
     def __init__(self, iterations=15000, lr=0.1):
-        self.iterations = iterations # number of iterations the fit method will be called
-        self.lr = lr # The learning rate
-        self.losses = [] # A list to hold the history of the calculated losses
-        self.W, self.b = None, None # the slope and the intercept of the model
+        self.iterations = iterations  # number of iterations the fit method will be called
+        self.lr = lr  # The learning rate
+        self.losses = []  # A list to hold the history of the calculated losses
+        self.W, self.b = None, None  # the slope and the intercept of the model
 
     def __loss(self, y, y_hat):
         """
@@ -29,7 +30,7 @@ class SimpleLinearRegression:
         :param X: The training set
         """
         weights = np.random.normal(size=X.shape[1] + 1)
-        self.W = weights[:X.shape[1]].reshape(-1, X.shape[1])
+        self.W = weights[: X.shape[1]].reshape(-1, X.shape[1])
         self.b = weights[-1]
         return self
 
@@ -42,8 +43,8 @@ class SimpleLinearRegression:
         :return:
             sets updated W and b to the instance Object (self)
         """
-        dW = - ( 2 * ( X.T ).dot( y - y_hat )  ) / self.m
-        db = - 2 * np.sum( y - y_hat ) / self.m
+        dW = -(2 * (X.T).dot(y - y_hat)) / self.m
+        db = -2 * np.sum(y - y_hat) / self.m
 
         self.W = self.W - self.lr * dW
         self.b = self.b - self.lr * db
@@ -76,13 +77,13 @@ class SimpleLinearRegression:
         :return:
             y_hat: the predicted output
         """
-        y_hat = X.dot( self.W ) + self.b
+        y_hat = X.dot(self.W) + self.b
         return y_hat
 
 
 if __name__ == "__main__":
     X_train, y_train, X_test, y_test = generate_data()
     model = SimpleLinearRegression()
-    model.fit(X_train,y_train)
+    model.fit(X_train, y_train)
     predicted = model.predict(X_test)
     evaluate(model, X_test, y_test, predicted)
