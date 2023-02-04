@@ -1,0 +1,36 @@
+name: Python package
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10"]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Get Branch
+        id: branch
+        run: echo "git_branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_BRANCH
+      - name: Check Branch
+        run: echo "${{ env.branch }}"
+      - name: Get Hash
+        id: hash
+        run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $VERSION
+      - name: Check Hash
+        run: echo "${{ env.hash }}"
+      - name: Build
+        run: make build-app
+      - name: Lint
+        run: make style-check
+      - name: Test with pytest
+        run: make build-test
+      - name: Clean
+        run: make clean-docker-base

@@ -38,7 +38,7 @@ build-test:
 
 
 clean-docker-base:
-	docker rmi ${BASE_IMAGE_NAME}
+	docker rmi ${IMAGE_NAME}
 
 
 clean-docker-app:
