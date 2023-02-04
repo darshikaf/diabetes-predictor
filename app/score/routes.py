@@ -3,16 +3,16 @@ from typing import Dict, List
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from app.score.handler import RequestHandler, get_handler
+from app import params
+from app.errors import InvalidInput, InvalidModelVersion
 from app.log import get_logger
-from app import params as params
-from app.errors import InvalidModelVersion, InvalidInput
-
+from app.score.handler import RequestHandler, get_handler
 from app.score.schema import ScoreModel
 
 SCORE_PREFIX = "/v1/score"
 
 router = APIRouter(prefix=SCORE_PREFIX, tags=["score"])
+
 
 def common_exception_handler(func):
     @wraps(func)
@@ -27,27 +27,29 @@ def common_exception_handler(func):
             logger.exception(e)
             raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, f"{e}") from e
         return result
+
     return inner_function
 
 
-@router.post("/stream",response_model=List[ScoreModel], response_model_exclude_none=True)
+@router.post("/stream", response_model=List[ScoreModel], response_model_exclude_none=True)
 @common_exception_handler
 async def stream_score(
     model_version: str = params.model_version,
-    input: Dict = params.input,
-    handler: RequestHandler = Depends(get_handler)
+    input_data: Dict = params.input_data,
+    handler: RequestHandler = Depends(get_handler),
 ):
-    if len(input) != 1:
+    if len(input_data) != 1:
         raise InvalidInput("Use v1/score/batch endpoint for batch processing.")
-    inference = handler.score(input=input, version=model_version)
+    inference = handler.score(input_data=input_data, version=model_version)
     return inference
 
-@router.post("/batch",response_model=List[ScoreModel], response_model_exclude_none=True)
+
+@router.post("/batch", response_model=List[ScoreModel], response_model_exclude_none=True)
 @common_exception_handler
 async def batch_score(
     model_version: str = params.model_version,
-    input: Dict = params.input,
-    handler: RequestHandler = Depends(get_handler)
+    input_data: Dict = params.input_data,
+    handler: RequestHandler = Depends(get_handler),
 ):
-    inference = handler.score(input=input, version=model_version)
+    inference = handler.score(input_data=input_data, version=model_version)
     return inference
