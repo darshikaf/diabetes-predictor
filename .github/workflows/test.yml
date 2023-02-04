@@ -16,16 +16,11 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Get Branch
-        id: branch
-        run: echo "git_branch=${GITHUB_REF#refs/heads/}" >> $env.GITHUB_BRANCH
-      - name: Check Branch
-        run: echo "${{ env.branch }}"
-      - name: Get Hash
-        id: hash
-        run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $env.VERSION
-      - name: Check Hash
-        run: echo "${{ env.hash }}"
+      - name: Set outputs
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $env.VERSION
+      - name: Check outputs
+        run: echo ${{ steps.vars.outputs.sha_short }}
       - name: Build
         run: make build-app
       - name: Lint
