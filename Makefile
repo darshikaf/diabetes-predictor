@@ -1,7 +1,7 @@
 .PHONY: build clean ecr-login run-local test-integration test-unit style-check style-inplace
 
 DOCKER_REGISTRY   ?= hub.docker.com
-DOCKER_REPO       ?= ${IMAGE_NAME}
+DOCKER_REPO       ?= darshika/diabetes-predictor
 BUILD_TAG         := latest
 TS                := $(shell date "+%Y%m%d%H%M%S")
 NAME              := $(lastword $(subst /, ,$(DOCKER_REPO)))
