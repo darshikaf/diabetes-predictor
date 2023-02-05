@@ -1,5 +1,5 @@
 ARG VERSION
-FROM hub.docker.com/darshika/diabetes-predictor:${VERSION} AS test
+FROM darshika/diabetes-predictor:${VERSION} AS test
 
 # Test suite must not be run as root since we create postgres DB instances
 RUN useradd -ms /bin/bash testuser
