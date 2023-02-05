@@ -35,6 +35,9 @@ entry_points = {"console_scripts": []}
 with open("LICENSE") as f:
     _license = f.read()
 
+with open(".conda/requirements.txt") as f:
+    required = f.read().splitlines()
+
 setup(
     name=name,
     version=version,
@@ -46,6 +49,7 @@ setup(
     packages=packages,
     package_dir=package_dir,
     package_data=package_data,
+    install_requires=required,
     data_files=data_files,
     include_package_data=True,
     zip_safe=False,

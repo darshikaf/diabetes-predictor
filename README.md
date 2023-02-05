@@ -17,7 +17,14 @@ Then build and run the service:
 make run-local
 ```
 
-The [`docker-compose.yml`](docker-compose.yml) file runs using `uvicorn` and mounts the code in the container so that updates to the code are reflected in the service automatically.
+* [`docker-compose.yml`](docker-compose.yml) file runs using `uvicorn` and mounts the code in the container so that updates to the code are reflected in the service automatically.
+
+* For fast iterative development, you can also install this as a package:
+
+```bash
+conda create -n db_preds
+python setup.py develop
+```
 
 ## Tests
 
