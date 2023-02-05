@@ -24,6 +24,6 @@ jobs:
           echo "${{ env.SHOT_COMMIT }}"
           make build-app VERSION=${{ env.SHOT_COMMIT }}
       - name: Test with pytest
-        run: make build-test
+        run: make build-test VERSION=${{ env.SHOT_COMMIT }}
       - name: Clean
         run: make clean-docker-base
