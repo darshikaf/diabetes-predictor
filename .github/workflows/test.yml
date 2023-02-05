@@ -2,7 +2,7 @@ name: Python package
 
 on: 
   push:
-  pull_requests:
+    pull_requests:
       types: [opened, reopened, ready_for_review]
 
 env:
