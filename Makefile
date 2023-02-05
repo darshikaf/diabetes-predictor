@@ -16,7 +16,7 @@ ifneq ($(UNAME_S),Darwin)
 endif
 
 
-IMAGE_NAME = ${DOCKER_REGISTRY}/${DOCKER_REPO}:${VERSION}
+IMAGE_NAME = ${DOCKER_REPO}:${VERSION}
 IMAGE_EXISTS = $(shell docker images -q ${IMAGE_NAME} 2> /dev/null)
 ifeq ("${IMAGE_EXISTS}", "")
 build: build-test build-app
@@ -38,11 +38,11 @@ build-test:
 
 
 clean-docker-base:
-	docker rmi ${BASE_IMAGE_NAME}
+	docker rmi ${IMAGE_NAME}
 
 
 clean-docker-app:
-	docker rmi hub.docker.com/darshika/diabetes-predictor 
+	docker rmi ${IMAGE_NAME} 
 
 
 clean-docker:
@@ -50,7 +50,6 @@ clean-docker:
 
 
 push-docker:
-	docker tag hub.docker.com/darshika/diabetes-predictor ${IMAGE_NAME}
 	docker push ${IMAGE_NAME}
 
 clean:
