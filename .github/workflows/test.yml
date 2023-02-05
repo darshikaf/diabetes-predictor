@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python ${{ ${{ env.PYTHON_VERSION }} }}
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ ${{ env.PYTHON_VERSION }} }}
+          python-version: ${{ env.PYTHON_VERSION }}
       - name: Check outputs
         run: |
           echo "SHOT_COMMIT=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
