@@ -1,0 +1,35 @@
+# name: Build and Test
+
+# on: 
+#   workflow_call:
+#     # inputs:
+#     #   input1:
+#     #     required: true
+#     #     type: string
+#   outputs:
+#     image_tag:
+#       description: heee
+#       value: ${{ jobs.build.outputs.image_tag}}
+
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     outputs:
+#       image_tag: "${{ env.SHORT_COMMIT}}"
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: Set up Python ${{ env.PYTHON_VERSION }}
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: ${{ env.PYTHON_VERSION }}
+#       - name: Check outputs
+#         run: |
+#           echo "SHORT_COMMIT=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+#       - name: Build
+#         run: |
+#           echo "$SHORT_COMMIT"
+#           echo "${{ env.SHORT_COMMIT }}"
+#           make build-app VERSION=${{ env.SHORT_COMMIT }}
+#       - name: Lint check and Test
+#         run: make build-test VERSION=${{ env.SHORT_COMMIT }}
