@@ -1,7 +1,7 @@
 .PHONY: build clean ecr-login run-local test-integration test-unit style-check style-inplace
 
 DOCKER_REGISTRY   ?= hub.docker.com
-DOCKER_REPO       ?= darshika/diabetes-predictor
+DOCKER_REPO       ?= ${IMAGE_NAME}
 BUILD_TAG         := latest
 TS                := $(shell date "+%Y%m%d%H%M%S")
 NAME              := $(lastword $(subst /, ,$(DOCKER_REPO)))
@@ -16,7 +16,7 @@ ifneq ($(UNAME_S),Darwin)
 endif
 
 
-IMAGE_NAME = ${DOCKER_REGISTRY}/${DOCKER_REPO}:${VERSION}
+IMAGE_NAME = ${DOCKER_REPO}:${VERSION}
 IMAGE_EXISTS = $(shell docker images -q ${IMAGE_NAME} 2> /dev/null)
 ifeq ("${IMAGE_EXISTS}", "")
 build: build-test build-app
@@ -38,11 +38,11 @@ build-test:
 
 
 clean-docker-base:
-	docker rmi ${IMAGE_NAME}
+	docker rmi ${IMAGE_NAME}:${VERSION}
 
 
 clean-docker-app:
-	docker rmi hub.docker.com/darshika/diabetes-predictor 
+	docker rmi ${IMAGE_NAME} 
 
 
 clean-docker:
@@ -50,8 +50,7 @@ clean-docker:
 
 
 push-docker:
-	docker tag hub.docker.com/darshika/diabetes-predictor ${IMAGE_NAME}
-	docker push ${IMAGE_NAME}
+	docker push ${IMAGE_NAME}:${VERSION}
 
 clean:
 	docker-compose down
