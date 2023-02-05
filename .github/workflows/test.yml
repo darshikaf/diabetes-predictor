@@ -30,9 +30,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      if: |
-        !startsWith(github.ref_name, 'main')
       - name: Push to Dockerhub
+        if: |
+          !startsWith(github.ref_name, 'main')
         run: make push-docker VERSION=${{ env.SHOT_COMMIT }}
       - name: Clean
         run: make clean-docker-base VERSION=${{ env.SHOT_COMMIT }}
