@@ -16,19 +16,14 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Set outputs
-        id: vars
-        run: |
-        echo "sha_short=$(git rev-parse --short HEAD)" >> $env.VERSION
-        GIT_VER=$(git describe --tags)
-        GIT_VER=${GIT_VER/-/.dev}  # replace the first dash with a dot
-        GIT_VER=${GIT_VER/-/.}  # replace the second dash with a dot
-        echo Building for git commit... Version: ${GIT_VER}
-        printf 'export VERSION=%s\n' ${GIT_VER} >> $BASH_ENV
       - name: Check outputs
-        run: echo ${{ steps.vars.outputs.sha_short }}
+        run: |
+          echo "SHOT_COMMIT=`echo ${GITHUB_SHA} | cut -c1-8`" $GITHUB_ENV
       - name: Build
-        run: make build-app
+        run: |
+          echo "$SHOT_COMMIT"
+          echo "${{ env.SHOT_COMMIT }}"
+          make build-app
       - name: Lint
         run: make style-check
       - name: Test with pytest

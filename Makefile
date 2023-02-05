@@ -16,7 +16,7 @@ ifneq ($(UNAME_S),Darwin)
 endif
 
 
-IMAGE_NAME = ${DOCKER_REGISTRY}/${DOCKER_REPO}:${VERSION}
+IMAGE_NAME = ${DOCKER_REGISTRY}/${DOCKER_REPO}:${SHOT_COMMIT}
 IMAGE_EXISTS = $(shell docker images -q ${IMAGE_NAME} 2> /dev/null)
 ifeq ("${IMAGE_EXISTS}", "")
 build: build-test build-app
@@ -26,7 +26,7 @@ endif
 
 build-app:
 	docker build \
-		--build-arg VERSION=${VERSION} \
+		--build-arg VERSION=${SHOT_COMMIT} \
 		-t ${IMAGE_NAME} \
 		-f docker/app.Dockerfile .
 
