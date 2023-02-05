@@ -1,0 +1,32 @@
+name: Release
+
+on: 
+  release:
+    types: [published]
+env:
+  PYTHON_VERSION: "3.10"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Check outputs
+        run: |
+          echo "SHORT_COMMIT=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Pull docker image
+        run: make pull-docker VERSION=${{ env.SHORT_COMMIT }}
+      - name: Tag image
+        run: make tag-docker-release RELEASE=${{ github.event.release.tag_name }}
+      - name: Push to Dockerhub from feature branch
+        run: make push-docker RELEASE=${{ github.event.release.tag_name }}
+      - name: Clean
+        run: make clean-docker-base RELEASE=${{ github.event.release.tag_name }}
