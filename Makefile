@@ -38,7 +38,7 @@ build-test:
 
 
 clean-docker-base:
-	docker rmi ${IMAGE_NAME}:${VERSION}
+	docker rmi ${IMAGE_NAME}
 
 
 clean-docker-app:
@@ -50,7 +50,7 @@ clean-docker:
 
 
 push-docker:
-	docker push ${IMAGE_NAME}:${VERSION}
+	docker push ${IMAGE_NAME}
 
 clean:
 	docker-compose down
