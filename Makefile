@@ -52,6 +52,12 @@ clean-docker:
 push-docker:
 	docker push ${IMAGE_NAME}
 
+pull-docker:
+	docker pull ${IMAGE_NAME}
+
+tag-docker-release:
+	docker tag ${IMAGE_NAME} ${DOCKER_REPO}:${RELEASE}
+
 clean:
 	docker-compose down
 	docker-compose \

@@ -40,3 +40,8 @@ To run the integration tests locally:
 ```bash
 make test-integration
 ```
+### Pull Requests
+
+* Committing to any branch will push a docker image to [Dockerhub](https://hub.docker.com/repository/docker/darshika/diabetes-predictor/general).
+
+* To release to production, create and publish a release from github.
