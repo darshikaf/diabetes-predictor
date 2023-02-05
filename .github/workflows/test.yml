@@ -18,12 +18,12 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Check outputs
         run: |
-          echo "SHOT_COMMIT=`echo ${GITHUB_SHA} | cut -c1-8`" $GITHUB_ENV
+          echo "SHOT_COMMIT=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
       - name: Build
         run: |
           echo "$SHOT_COMMIT"
           echo "${{ env.SHOT_COMMIT }}"
-          make build-app
+          make build-app VERSION=${{ env.SHOT_COMMIT }}
       - name: Lint
         run: make style-check
       - name: Test with pytest
