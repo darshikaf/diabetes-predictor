@@ -17,6 +17,7 @@ endif
 
 
 IMAGE_NAME = ${DOCKER_REGISTRY}/${DOCKER_REPO}:${VERSION}
+IMAGE_LATEST = ${DOCKER_REGISTRY}/${DOCKER_REPO}:${BUILD_TAG}
 IMAGE_EXISTS = $(shell docker images -q ${IMAGE_NAME} 2> /dev/null)
 ifeq ("${IMAGE_EXISTS}", "")
 build: build-app
@@ -49,6 +50,7 @@ clean-docker-app:
 
 push-docker:
 	docker push ${IMAGE_NAME}
+	docker push ${IMAGE_LATEST}
 
 pull-docker:
 	docker pull ${IMAGE_NAME}

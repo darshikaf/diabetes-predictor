@@ -10,10 +10,14 @@
 
 ## Docs
 
-API docs can be accessed at http://localhost:8000/diabetes-detector/docs#
+API docs can be accessed at http://13.239.57.125:8000/diabetes-predictor/docs#
 ## Developing
 
-Login to dockerhub.
+Develeopment workflow is as follows:
+
+<img src="docs/development_workflow.png?raw=true" alt= “” width="400" height="100">
+
+To contribute, first log in to ECR and make sure `AWS_ECR_AP_SE2` env variable is set.
 
 Then build and run the service:
 

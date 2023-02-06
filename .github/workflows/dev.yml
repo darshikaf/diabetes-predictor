@@ -44,5 +44,7 @@ jobs:
           REPOSITORY: diabetes-predictor
           IMAGE_TAG: ${{ env.SHORT_COMMIT }}
         run: make push-docker VERSION=${{ env.SHORT_COMMIT }} AWS_ECR_AP_SE2=${{ secrets.AWS_ECR_AP_SE2 }}
+      - name: Deploy
+        run: aws ecs update-service --cluster diabetes-cluster --service diabetes-predictor --force-new-deployment
       - name: Clean
         run: make clean-docker-base VERSION=${{ env.SHORT_COMMIT }} AWS_ECR_AP_SE2=${{ secrets.AWS_ECR_AP_SE2 }}
