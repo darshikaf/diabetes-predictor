@@ -22,7 +22,7 @@ Resources:
           Properties:
             Path: /health
             Method: get
-      ImageUri: 'public.ecr.aws/z7k9f6z0/diabetes-predictor:85d42b90'
+      ImageUri: '470264087773.dkr.ecr.ap-southeast-2.amazonaws.com/diabetes-predictor'
 Outputs:
   HelloWorldApi:
     Description: API Gateway endpoint URL for Prod stage for Hello World function
