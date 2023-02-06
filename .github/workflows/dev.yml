@@ -46,4 +46,4 @@ jobs:
       - name: Clean
         run: make clean-docker-base VERSION=${{ env.SHORT_COMMIT }} 
       - name: Deploy
-        run: sam deploy -t packaged-template.yaml --image-repository public.ecr.aws/z7k9f6z0/diabetes-predictor
+        run: sam deploy -t packaged-template.yaml --image-repository 470264087773.dkr.ecr.ap-southeast-2.amazonaws.com/diabetes-predictor
