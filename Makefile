@@ -1,6 +1,6 @@
 .PHONY: build clean ecr-login run-local test-integration test-unit style-check style-inplace
 
-DOCKER_REGISTRY   ?= 470264087773.dkr.ecr.ap-southeast-2.amazonaws.com
+DOCKER_REGISTRY   ?= ${AWS_ECR_AP_SE2}.dkr.ecr.ap-southeast-2.amazonaws.com
 DOCKER_REPO       ?= diabetes-predictor
 BUILD_TAG         := latest
 TS                := $(shell date "+%Y%m%d%H%M%S")
@@ -19,14 +19,14 @@ endif
 IMAGE_NAME = ${DOCKER_REGISTRY}/${DOCKER_REPO}:${VERSION}
 IMAGE_EXISTS = $(shell docker images -q ${IMAGE_NAME} 2> /dev/null)
 ifeq ("${IMAGE_EXISTS}", "")
-build: build-test build-app
+build: build-app
 else
 clean-docker: clean-docker-app
 endif
 
 build-app:
 	docker build \
-		--build-arg AWS_ECR=${AWS_ECR_AP_SE2} \
+		--build-arg AWS_ECR_AP_SE2=${AWS_ECR_AP_SE2} \
 		--build-arg VERSION=${VERSION} \
 		-t ${IMAGE_NAME} \
 		-f docker/app.Dockerfile .
@@ -34,7 +34,7 @@ build-app:
 
 build-test:
 	docker build \
-		--build-arg AWS_ECR=${AWS_ECR_AP_SE2} \
+		--build-arg AWS_ECR_AP_SE2=${AWS_ECR_AP_SE2} \
 		--build-arg VERSION=${VERSION} \
 		-f docker/test.Dockerfile .
 
