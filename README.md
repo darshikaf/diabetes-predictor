@@ -10,7 +10,7 @@
 
 ## Docs
 
-API docs can be accessed at http://13.239.57.125:8000/diabetes-predictor/docs#
+API docs can be accessed at `http://<ip-address>:8000/diabetes-predictor/docs#`.
 ## Developing
 
 Develeopment workflow is as follows:
