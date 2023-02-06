@@ -2,11 +2,15 @@
 
 ## Table of Contents
 
+* [Docs](#docs)
 * [Developing](#developing)
 * [Tests](#tests)
 * [Migration](#migration)
 * [Release](#release)
 
+## Docs
+
+API docs can be accessed at http://localhost:8000/diabetes-detector/docs#
 ## Developing
 
 Login to dockerhub.
@@ -14,6 +18,7 @@ Login to dockerhub.
 Then build and run the service:
 
 ```bash
+export VERSION=local
 make run-local
 ```
 

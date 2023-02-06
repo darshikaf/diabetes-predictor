@@ -1,7 +1,7 @@
 .PHONY: build clean ecr-login run-local test-integration test-unit style-check style-inplace
 
-DOCKER_REGISTRY   ?= hub.docker.com
-DOCKER_REPO       ?= darshika/diabetes-predictor
+DOCKER_REGISTRY   ?= public.ecr.aws/z7k9f6z0
+DOCKER_REPO       ?= diabetes-predictor
 BUILD_TAG         := latest
 TS                := $(shell date "+%Y%m%d%H%M%S")
 NAME              := $(lastword $(subst /, ,$(DOCKER_REPO)))
@@ -16,7 +16,7 @@ ifneq ($(UNAME_S),Darwin)
 endif
 
 
-IMAGE_NAME = ${DOCKER_REPO}:${VERSION}
+IMAGE_NAME = ${DOCKER_REGISTRY}/${DOCKER_REPO}:${VERSION}
 IMAGE_EXISTS = $(shell docker images -q ${IMAGE_NAME} 2> /dev/null)
 ifeq ("${IMAGE_EXISTS}", "")
 build: build-test build-app
@@ -26,6 +26,7 @@ endif
 
 build-app:
 	docker build \
+		--build-arg AWS_ECR=${AWS_ECR} \
 		--build-arg VERSION=${VERSION} \
 		-t ${IMAGE_NAME} \
 		-f docker/app.Dockerfile .
@@ -33,6 +34,7 @@ build-app:
 
 build-test:
 	docker build \
+		--build-arg AWS_ECR=${AWS_ECR} \
 		--build-arg VERSION=${VERSION} \
 		-f docker/test.Dockerfile .
 
@@ -43,10 +45,6 @@ clean-docker-base:
 
 clean-docker-app:
 	docker rmi ${IMAGE_NAME} 
-
-
-clean-docker:
-	echo "Removed docker images"
 
 
 push-docker:
@@ -67,7 +65,7 @@ clean:
 		rm -f
 
 
-run-local: clean
+run-local: clean build-app build-test
 	docker-compose -f docker-compose.yml -f docker-compose.local.yml up \
     	--exit-code-from predictor  \
     	--force-recreate \

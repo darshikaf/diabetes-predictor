@@ -6,6 +6,8 @@
 
 * Submodules were used for each endpoint type to enable scaling the system for new features such as mointoring, explainability etc.
 
+<img src="FastAPI_module.png?raw=true" alt= “” width="400" height="400">
+
 ### `train` endpoint and model versioning
 
 * `train` endpoint was implemented to support model retraining. This could mean either data refreshing or parameter tuning. 
