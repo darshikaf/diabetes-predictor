@@ -46,9 +46,3 @@ jobs:
         run: make push-docker VERSION=${{ env.SHORT_COMMIT }} AWS_ECR_AP_SE2=${{ secrets.AWS_ECR_AP_SE2 }}
       - name: Clean
         run: make clean-docker-base VERSION=${{ env.SHORT_COMMIT }} AWS_ECR_AP_SE2=${{ secrets.AWS_ECR_AP_SE2 }}
-      - name: Deploy
-        run: sam deploy -t packaged-template.yaml \
-          --no-disable-rollback \
-          --no-fail-on-empty-changeset \
-          --image-repository 470264087773.dkr.ecr.ap-southeast-2.amazonaws.com/diabetes-predictor:latest \
-          --parameter-overrides=Revision=latest
