@@ -1,6 +1,7 @@
 name: Build Test and Publish
 
-on: 
+on:
+  workflow_dispatch:
   push:
     pull_requests:
       types: [opened, reopened, ready_for_review]
