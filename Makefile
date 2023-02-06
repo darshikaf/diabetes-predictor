@@ -51,7 +51,7 @@ clean-docker-app:
 
 push-docker:
 	docker push ${IMAGE_NAME}
-	docker push -f ${IMAGE_LATEST}
+	docker push ${IMAGE_LATEST}
 
 pull-docker:
 	docker pull ${IMAGE_NAME}
