@@ -2,3 +2,6 @@ version: "3.10"
 services:
   predictor:
     entrypoint: bash -c "uvicorn app.main:app --reload --host 0.0.0.0 --port 8000"
+    environment:
+      - VERSION=${VERSION}
+      - AWS_ECR=${AWS_ECR_AP_SE2}

@@ -2,18 +2,27 @@
 
 ## Table of Contents
 
+* [Docs](#docs)
 * [Developing](#developing)
 * [Tests](#tests)
 * [Migration](#migration)
 * [Release](#release)
 
+## Docs
+
+API docs can be accessed at `http://<ip-address>:8000/diabetes-predictor/docs#`.
 ## Developing
 
-Login to dockerhub.
+Develeopment workflow is as follows:
+
+<img src="docs/development_workflow.png?raw=true" alt= “” width="400" height="100">
+
+To contribute, first log in to ECR and make sure `AWS_ECR_AP_SE2` env variable is set.
 
 Then build and run the service:
 
 ```bash
+export VERSION=local
 make run-local
 ```
 

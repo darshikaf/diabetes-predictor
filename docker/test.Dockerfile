@@ -1,7 +1,8 @@
 ARG VERSION
-FROM darshika/diabetes-predictor:${VERSION} AS test
+ARG AWS_ECR_AP_SE2
 
-# Test suite must not be run as root since we create postgres DB instances
+FROM ${AWS_ECR_AP_SE2}.dkr.ecr.ap-southeast-2.amazonaws.com/diabetes-predictor:${VERSION} AS test
+
 RUN useradd -ms /bin/bash testuser
 USER testuser
 COPY . /home/testuser

@@ -1,0 +1,4 @@
+version: "3.8"
+services:
+  predictor:
+    entrypoint: bash -c ".conda/run_test.sh --test-suite integration"
