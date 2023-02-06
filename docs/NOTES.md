@@ -41,6 +41,8 @@
 
 * As the simplest security measure REST service can be deployed with SSL. In addition API authentication for endpoints can be implemented.
 
+* Authentication method for AWS should be updated to use an assumed role for improved security. 
+
 
 ### CI/CD
 
