@@ -52,6 +52,10 @@
 * When a release is published, a tagged image will be pushed. The way tagged releases are handled can be improved by investing more time on it. Ideally it should be done with re-usable github workflows to build, test and publish as a release image.
 * Due to time constraints, Continous Deployment is implememnted to tag every new commit as latest and deployed to ECS. For production ready environment, it could be implemented with a tool like ArgoCD. Alternatively FastAPI application can be directly deployed to AWS Serverless.
 
+### Monitoring on service
+
+* In a production environment, it is critical to ensure high availability. A part of high availability will be addressed by the ochestration platform (in case kubernetes or a similar platform is used). To ensure application health, network and server monitoring with tools like Nagios can be used. Alternatively, logging tools come with its own Event Definitions and notifications on those events -- which can be used to raise alerts when application is unhealthy.
+
 ### AWS Env variables and Authentication
 
 * Locally building and running the container should not require authentication. However `AWS_ECR_AP_SE2` will be required. Value for this secret is shared in the email.

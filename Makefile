@@ -30,6 +30,7 @@ build-app:
 		--build-arg AWS_ECR_AP_SE2=${AWS_ECR_AP_SE2} \
 		--build-arg VERSION=${VERSION} \
 		-t ${IMAGE_NAME} \
+		-t ${IMAGE_LATEST} \
 		-f docker/app.Dockerfile .
 
 
