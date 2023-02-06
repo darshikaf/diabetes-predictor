@@ -33,7 +33,7 @@ jobs:
           echo "${{ env.SHORT_COMMIT }}"
           make build-app VERSION=${{ env.SHORT_COMMIT }}
       - name: Lint and test
-        run: make build-test VERSION=${{ env.SHORT_COMMIT }} AWS_ECR=${{ env.AWS_ECR }}
+        run: make build-test VERSION=${{ env.SHORT_COMMIT }}
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1

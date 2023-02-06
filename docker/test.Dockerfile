@@ -1,6 +1,6 @@
 ARG VERSION
-ARG AWS_ECR
-FROM ${AWS_ECR}/diabetes-predictor:${VERSION} AS test
+
+FROM public.ecr.aws/z7k9f6z0/diabetes-predictor:${VERSION} AS test
 
 # Test suite must not be run as root since we create postgres DB instances
 RUN useradd -ms /bin/bash testuser
