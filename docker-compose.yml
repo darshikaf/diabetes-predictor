@@ -1,11 +1,11 @@
 version: "3.10"
 services:
   predictor:
-      image: ${AWS_ECR}/diabetes-predictor:${VERSION}
+      image: ${AWS_ECR_AP_SE2}.dkr.ecr.ap-southeast-2.amazonaws.com/diabetes-predictor:${VERSION}
       build:
         context: ./
         args:
-          - AWS_ECR=${AWS_ECR}
+          - AWS_ECR=${AWS_ECR_AP_SE2}.dkr.ecr.ap-southeast-2.amazonaws.com
           - VERSION=${VERSION}
       entrypoint: bash -c "uvicorn app.main:app --reload --host 0.0.0.0 --port 8000"
       volumes:

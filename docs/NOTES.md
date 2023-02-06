@@ -2,7 +2,7 @@
 
 ### API Framework
 
-* FastAPI was chosen mainly because of self documenting capability of the framework. In addition I've used dependency injection to allow customisations to response payload.
+* `FastAPI` was chosen mainly because of its high performance compared to `Flask` and self documenting capability of the framework. In addition I've used dependency injection to allow customisations to response payload.
 
 * Submodules were used for each endpoint type to enable scaling the system for new features such as mointoring, explainability etc.
 
@@ -37,6 +37,8 @@
 
 * We will also need to implement a fallback strategy for when data quality of inferences fail. For ex: using a simple heuristic to replace the model score when QA fails.
 
+* A kill switch that can be triggered when n number of poor quality scores are generated can be implemented to stop poor data from going downstream. Alarms and notifications can be integrated to triage the scenario to model owners.
+
 ### Security
 
 * As the simplest security measure REST service can be deployed with SSL. In addition API authentication for endpoints can be implemented.
@@ -48,3 +50,12 @@
 
 * CI/CD is designed to comply with tagged releases. Committing to any branch will build, test and push a docker image. 
 * When a release is published, a tagged image will be pushed. The way tagged releases are handled can be improved by investing more time on it. Ideally it should be done with re-usable github workflows to build, test and publish as a release image.
+* Due to time constraints, Continous Deployment is implememnted to tag every new commit as latest and deployed to ECS. For production ready environment, it could be implemented with a tool like ArgoCD. Alternatively FastAPI application can be directly deployed to AWS Serverless.
+
+### Monitoring on service
+
+* In a production environment, it is critical to ensure high availability. A part of high availability will be addressed by the ochestration platform (in case kubernetes or a similar platform is used). To ensure application health, network and server monitoring with tools like Nagios can be used. Alternatively, logging tools come with its own Event Definitions and notifications on those events -- which can be used to raise alerts when application is unhealthy.
+
+### AWS Env variables and Authentication
+
+* Locally building and running the container should not require authentication. However `AWS_ECR_AP_SE2` will be required. Value for this secret is shared in the email.

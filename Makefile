@@ -1,6 +1,6 @@
 .PHONY: build clean ecr-login run-local test-integration test-unit style-check style-inplace
 
-DOCKER_REGISTRY   ?= public.ecr.aws/z7k9f6z0
+DOCKER_REGISTRY   ?= ${AWS_ECR_AP_SE2}.dkr.ecr.ap-southeast-2.amazonaws.com
 DOCKER_REPO       ?= diabetes-predictor
 BUILD_TAG         := latest
 TS                := $(shell date "+%Y%m%d%H%M%S")
@@ -17,24 +17,26 @@ endif
 
 
 IMAGE_NAME = ${DOCKER_REGISTRY}/${DOCKER_REPO}:${VERSION}
+IMAGE_LATEST = ${DOCKER_REGISTRY}/${DOCKER_REPO}:${BUILD_TAG}
 IMAGE_EXISTS = $(shell docker images -q ${IMAGE_NAME} 2> /dev/null)
 ifeq ("${IMAGE_EXISTS}", "")
-build: build-test build-app
+build: build-app
 else
 clean-docker: clean-docker-app
 endif
 
 build-app:
 	docker build \
-		--build-arg AWS_ECR=${AWS_ECR} \
+		--build-arg AWS_ECR_AP_SE2=${AWS_ECR_AP_SE2} \
 		--build-arg VERSION=${VERSION} \
 		-t ${IMAGE_NAME} \
+		-t ${IMAGE_LATEST} \
 		-f docker/app.Dockerfile .
 
 
 build-test:
 	docker build \
-		--build-arg AWS_ECR=${AWS_ECR} \
+		--build-arg AWS_ECR_AP_SE2=${AWS_ECR_AP_SE2} \
 		--build-arg VERSION=${VERSION} \
 		-f docker/test.Dockerfile .
 
@@ -49,6 +51,7 @@ clean-docker-app:
 
 push-docker:
 	docker push ${IMAGE_NAME}
+	docker push ${IMAGE_LATEST}
 
 pull-docker:
 	docker pull ${IMAGE_NAME}
@@ -65,7 +68,7 @@ clean:
 		rm -f
 
 
-run-local: clean build-app build-test
+run-local: clean build-app
 	docker-compose -f docker-compose.yml -f docker-compose.local.yml up \
     	--exit-code-from predictor  \
     	--force-recreate \

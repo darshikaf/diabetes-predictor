@@ -23,10 +23,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Pull docker image
-        run: make pull-docker VERSION=${{ env.SHORT_COMMIT }}
+        run: make pull-docker VERSION=${{ env.SHORT_COMMIT }} AWS_ECR_AP_SE2=${{ secrets.AWS_ECR_AP_SE2 }}
       - name: Tag image
         run: make tag-docker-release RELEASE=${{ github.event.release.tag_name }}
       - name: Push to Dockerhub from feature branch
-        run: make push-docker RELEASE=${{ github.event.release.tag_name }}
+        run: make push-docker RELEASE=${{ github.event.release.tag_name }} AWS_ECR_AP_SE2=${{ secrets.AWS_ECR_AP_SE2 }}
       - name: Clean
-        run: make clean-docker-base RELEASE=${{ github.event.release.tag_name }}
+        run: make clean-docker-base RELEASE=${{ github.event.release.tag_name }} AWS_ECR_AP_SE2=${{ secrets.AWS_ECR_AP_SE2 }}
