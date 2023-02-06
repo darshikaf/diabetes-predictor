@@ -34,7 +34,7 @@ jobs:
           echo "${{ env.SHORT_COMMIT }}"
           make build-app VERSION=${{ env.SHORT_COMMIT }}
       - name: Lint and test
-        run: make build-test VERSION=${{ env.SHORT_COMMIT }}
+        run: make build-test VERSION=${{ env.SHORT_COMMIT }} AWS_ECR_AP_SE2=${{ env.AWS_ECR_AP_SE2 }}
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
@@ -47,4 +47,8 @@ jobs:
       - name: Clean
         run: make clean-docker-base VERSION=${{ env.SHORT_COMMIT }} 
       - name: Deploy
-        run: sam deploy --no-disable-rollback --no-fail-on-empty-changeset -t packaged-template.yml --image-repository 470264087773.dkr.ecr.ap-southeast-2.amazonaws.com/diabetes-predictor 
+        run: sam deploy -t packaged-template.yaml \
+          --no-disable-rollback \
+          --no-fail-on-empty-changeset \
+          --image-repository 470264087773.dkr.ecr.ap-southeast-2.amazonaws.com/diabetes-predictor:latest \
+          --parameter-overrides=Revision=latest
