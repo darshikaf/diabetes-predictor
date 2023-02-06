@@ -36,6 +36,8 @@ jobs:
         run: make build-test VERSION=${{ env.SHORT_COMMIT }}
       - name: Login to Amazon ECR
         id: login-ecr
+        with:
+          registry-type: public
         uses: aws-actions/amazon-ecr-login@v1
       - name: Push to ECR
         env:
